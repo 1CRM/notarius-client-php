@@ -21,6 +21,7 @@ class WorkflowSigner extends ApiObject {
     public $iv;
     public $birthDate;
     public $ivSigner;
+    public $subjectDN;
 
     protected function objectProps(): array {
         return [
