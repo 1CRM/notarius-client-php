@@ -63,12 +63,13 @@ class Client {
      * @throws GuzzleException
      * @throws RequestException
      */
-    public function authenticate(array $options = []) {
-        $key = $this->getAuthOption($options, 'auth_key', 'NOTARIUS_AUTH_KEY');
-        $secret = $this->getAuthOption($options, 'auth_secret', 'NOTARIUS_AUTH_SECRET');
-        $force = $this->getAuthOption($options, 'force_platform', 'NOTARIUS_PLATFORM_LOGIN');
-        $username = $this->getAuthOption($options, 'username', 'NOTARIUS_AUTH_USER');
-        $password = $this->getAuthOption($options, 'password', 'NOTARIUS_AUTH_PASSWORD');
+    public function authenticate() {
+        $key = $this->getAuthOption(ClientOptions::NOTARIUS_AUTH_KEY);
+        $secret = $this->getAuthOption(ClientOptions::NOTARIUS_AUTH_SECRET);
+        $force = $this->getAuthOption(ClientOptions::NOTARIUS_PLATFORM_LOGIN, true);
+        $username = $this->getAuthOption(ClientOptions::NOTARIUS_AUTH_USER);
+        $password = $this->getAuthOption(ClientOptions::NOTARIUS_AUTH_PASSWORD);
+
         $options = [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -304,9 +305,9 @@ class Client {
         return $this->options[ClientOptions::SANDBOX_URI] ?? self::BASE_URI;
     }
 
-    private function getAuthOption(array $options, string $name, string $envVar): string {
-        $value = $options[$name] ?? getenv($envVar);
-        return is_string($value) ? $value : "";
+    private function getAuthOption(string $name, $asBool = false): string {
+        $value = $this->options[$name] ?? getenv($envVar);
+        return $asBool ? (bool)$value : (is_string($value) ? $value : "");
     }
 
     private function expectStatusCode(ResponseInterface $res, $expect = 200): ResponseInterface {
