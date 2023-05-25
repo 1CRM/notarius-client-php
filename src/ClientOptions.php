@@ -24,12 +24,12 @@ class ClientOptions {
     }
 
     public function withAuthKey(string $key) {
-        $this->options[self::NOTARIUS_AUTH_SECRET] = $key;
+        $this->options[self::NOTARIUS_AUTH_KEY] = $key;
         return $this;
     }
 
     public function withSecret(string $secret) {
-        $this->options[self::NOTARIUS_AUTH_KEY] = $secret;
+        $this->options[self::NOTARIUS_AUTH_SECRET] = $secret;
         return $this;
     }
 

@@ -305,8 +305,8 @@ class Client {
         return $this->options[ClientOptions::SANDBOX_URI] ?? self::BASE_URI;
     }
 
-    private function getAuthOption(string $name, $asBool = false): string {
-        $value = $this->options[$name] ?? getenv($envVar);
+    private function getAuthOption(string $name, $asBool = false) {
+        $value = $this->options[$name] ?? getenv($name);
         return $asBool ? (bool)$value : (is_string($value) ? $value : "");
     }
 
